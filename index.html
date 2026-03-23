@@ -1,549 +1,1914 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
-    <title>暖男麵包鋪 菜單</title>
+    <title>暖男麵包鋪</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --cream: #faf5eb;
+            --warm-white: #fff9f0;
+            --butter: #f5e6c8;
+            --caramel: #c8853a;
+            --dark-caramel: #9b5f1e;
+            --espresso: #3d2008;
+            --crust: #8b5a2b;
+            --ink: #2c1a0e;
+            --gold: #d4a843;
+            --soft-shadow: rgba(61, 32, 8, 0.12);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #fff8f0;
-            margin: 0;
-            padding: 0;
+            font-family: 'Noto Serif TC', serif;
+            background-color: var(--cream);
+            color: var(--ink);
+            overflow-x: hidden;
         }
 
+        /* ── GRAIN TEXTURE OVERLAY ── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.4;
+        }
+
+        /* ── HEADER ── */
         header {
-            display: flex;
-            justify-content: space-between; /* 左右分開 */
-            align-items: center;
-            padding: 10px 20px;
-            background-color: #f4d3a2;
-        }
-
-        header h1 {
-            color: #8B4513;
-            margin: 0;
-        }
-
-        .cart {
-            font-size: 24px;
-            cursor: pointer;
-        }
-
-
-        .badge {
-            background: red;
-            color: white;
-            border-radius: 50%;
-            padding: 3px 7px;
-            font-size: 12px;
-            position: relative;
-            top: -10px;
-        }
-
-        #cart-items li {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-    
-
-        h2 {
-            margin-top: 30px;
-            margin-bottom: 10px;
-            color: #8B4513;
-            text-align: center;
-        }
-
-        .category {
-            margin-bottom: 40px;
-        }
-
-        .menu {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            padding: 0 20px;
-        }
-
-        .item {
-            background: white;
-            border-radius: 10px;
-            width: 45%;  /* 手機一排兩個 */
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            overflow: hidden;
-            text-align: center;
-        }
-
-        .item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .item img {
-            width: 100%;
-            height: auto;
-        }
-
-        .item h3 {
-            margin: 10px 0 5px 0;
-            color: #8B4513;
-        }
-
-        .item p {
-            margin: 0 0 10px 0;
-            font-weight: bold;
-            color: #e67e22;
-        }
-
-        .item h3 {
-            font-size: 16px;
-        }
-
-        @media (max-width: 600px) {
-        .item {
-            width: 90%;  /* 手機一排一個 */
-            }
-        }
-
-        @media (min-width: 900px) {
-    .item {
-        width: 22%;  /* 電腦一排4個 */
-        }
-        }
-
-        .nav {
-            display: flex;
-            gap: 10px;
-            padding: 10px;
-            background: #fff;
             position: sticky;
             top: 0;
-            z-index: 1000;
+            z-index: 500;
+            background: rgba(250, 245, 235, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(200, 133, 58, 0.2);
+            padding: 0 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+        }
+
+        .logo-main {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--espresso);
+            letter-spacing: 0.02em;
+        }
+
+        .logo-sub {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--caramel);
+            letter-spacing: 0.1em;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .cart-btn {
+            position: relative;
+            background: var(--espresso);
+            color: var(--cream);
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-family: 'Noto Serif TC', serif;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            letter-spacing: 0.05em;
+        }
+
+        .cart-btn:hover {
+            background: var(--dark-caramel);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(61, 32, 8, 0.25);
+        }
+
+        .cart-badge {
+            background: var(--gold);
+            color: var(--espresso);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            font-size: 11px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Lato', sans-serif;
+        }
+
+
+
+        /* ── CAROUSEL ── */
+        .slideshow-section {
+            background: var(--butter);
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .slideshow {
+            position: relative;
+            height: 280px;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .slide.active { opacity: 1; }
+
+        .slide-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, rgba(61, 32, 8, 0.5) 0%, transparent 60%);
+        }
+
+        .slide-caption {
+            position: absolute;
+            left: 48px;
+            bottom: 40px;
+            color: var(--cream);
+        }
+
+        .slide-caption h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .slide-caption p {
+            font-family: 'Lato', sans-serif;
+            font-size: 13px;
+            letter-spacing: 0.1em;
+            opacity: 0.75;
+            margin-top: 4px;
+        }
+
+        .slide-dots {
+            position: absolute;
+            bottom: 16px;
+            right: 24px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .slide-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(250, 245, 235, 0.4);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .slide-dot.active {
+            background: var(--gold);
+            width: 20px;
+            border-radius: 3px;
+        }
+
+        /* ── NAV TABS ── */
+        .category-nav {
+            background: var(--warm-white);
+            border-bottom: 1px solid rgba(200, 133, 58, 0.15);
+            position: sticky;
+            top: 72px;
+            z-index: 400;
             overflow-x: auto;
-            border-bottom: 1px solid #eee;
+            scrollbar-width: none;
         }
 
-        /* 電腦版置中 */
-        @media (min-width: 768px) {
-            .nav {
-                justify-content: center;
-                overflow-x: visible; /* 電腦不用滑 */
-            }
+        .category-nav::-webkit-scrollbar { display: none; }
+
+        .category-nav-inner {
+            display: flex;
+            gap: 0;
+            padding: 0 24px;
+            min-width: max-content;
         }
 
-        .nav a {
+        .cat-tab {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            padding: 16px 20px;
             text-decoration: none;
-            padding: 8px 12px;
-            background: #f4d3a2;
-            border-radius: 20px;
-            color: #8B4513;
+            color: var(--crust);
+            font-family: 'Noto Serif TC', serif;
+            font-size: 13px;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
             white-space: nowrap;
-            font-size: 14px;
         }
 
-        .nav a:hover {
-            background: #e6b97c;
+        .cat-tab .cat-icon {
+            font-size: 18px;
+            line-height: 1;
         }
 
-        html {
-            scroll-behavior: smooth;
+        .cat-tab:hover,
+        .cat-tab.active {
+            color: var(--caramel);
+            border-bottom-color: var(--caramel);
         }
 
-        .category {
+        /* ── SECTION ── */
+        .section {
+            padding: 64px 24px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            scroll-margin-top: 140px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            gap: 16px;
             margin-bottom: 40px;
-            scroll-margin-top: 80px; /* 這個數字可以調 */
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(200, 133, 58, 0.2);
         }
 
+        .section-title-zh {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--espresso);
+        }
+
+        .section-title-en {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 15px;
+            color: var(--caramel);
+            font-weight: 400;
+        }
+
+        .section-count {
+            margin-left: auto;
+            font-family: 'Lato', sans-serif;
+            font-size: 12px;
+            color: rgba(61, 32, 8, 0.35);
+            letter-spacing: 0.1em;
+        }
+
+        /* ── MENU GRID ── */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        @media (min-width: 640px) {
+            .menu-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        }
+
+        @media (min-width: 1024px) {
+            .menu-grid { grid-template-columns: repeat(4, 1fr); gap: 24px; }
+        }
+
+        /* ── ITEM CARD ── */
+        .item-card {
+            background: var(--warm-white);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(200, 133, 58, 0.12);
+            transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .item-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(61, 32, 8, 0.14);
+            border-color: rgba(200, 133, 58, 0.3);
+        }
+
+        .item-img-wrap {
+            position: relative;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            background: var(--butter);
+        }
+
+        .item-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .item-card:hover .item-img-wrap img {
+            transform: scale(1.06);
+        }
+
+        /* image placeholder for missing images */
+        .img-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            background: linear-gradient(135deg, var(--butter), #edd9b0);
+        }
+
+        .item-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--gold);
+            color: var(--espresso);
+            font-family: 'Lato', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 3px 8px;
+            border-radius: 50px;
+        }
+
+        .item-body {
+            padding: 14px 14px 16px;
+        }
+
+        .item-name {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--espresso);
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .item-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .item-price {
+            font-family: 'Lato', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--caramel);
+            letter-spacing: 0.02em;
+        }
+
+        .item-price .currency {
+            font-size: 11px;
+            font-weight: 400;
+            margin-right: 1px;
+        }
+
+        .add-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--espresso);
+            color: var(--cream);
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            line-height: 1;
+        }
+
+        .add-btn:hover {
+            background: var(--caramel);
+            transform: scale(1.1);
+        }
+
+        .add-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* no-add items */
+        .add-btn:disabled {
+            background: rgba(61, 32, 8, 0.1);
+            color: rgba(61, 32, 8, 0.3);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ── QTY STEPPER (card) ── */
+        .qty-stepper {
+            display: flex;
+            align-items: center;
+            background: var(--espresso);
+            border-radius: 50px;
+            overflow: hidden;
+        }
+        .qty-btn {
+            width: 28px;
+            height: 28px;
+            background: none;
+            border: none;
+            color: var(--cream);
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s;
+        }
+        .qty-btn:hover { background: rgba(255,255,255,0.12); }
+        .qty-num {
+            min-width: 22px;
+            text-align: center;
+            font-family: 'Lato', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--cream);
+        }
+
+        /* ── CART ITEM QTY ── */
+        .cart-qty-btn {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            border: 1px solid rgba(200,133,58,0.3);
+            background: none;
+            color: var(--crust);
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s;
+            line-height: 1;
+        }
+        .cart-qty-btn:hover { background: var(--butter); border-color: var(--caramel); }
+        .cart-qty-num {
+            font-family: 'Lato', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--espresso);
+            min-width: 18px;
+            text-align: center;
+        }
+
+        /* ── CART PANEL ── */
+        .cart-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(44, 26, 14, 0.4);
+            z-index: 800;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .cart-overlay.open { opacity: 1; pointer-events: all; }
+
+        .cart-panel {
+            position: fixed;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 360px;
+            max-width: 100vw;
+            background: var(--warm-white);
+            z-index: 900;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: flex;
+            flex-direction: column;
+            box-shadow: -8px 0 40px rgba(61, 32, 8, 0.15);
+        }
+
+        .cart-panel.open { transform: translateX(0); }
+
+        .cart-header {
+            padding: 28px 24px 20px;
+            border-bottom: 1px solid rgba(200, 133, 58, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .cart-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--espresso);
+        }
+
+        .cart-close {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(61, 32, 8, 0.06);
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .cart-close:hover { background: rgba(61, 32, 8, 0.12); }
+
+        .cart-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .cart-empty {
+            text-align: center;
+            padding: 60px 20px;
+            color: rgba(61, 32, 8, 0.4);
+        }
+
+        .cart-empty .empty-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .cart-empty p {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 14px;
+            letter-spacing: 0.05em;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(200, 133, 58, 0.1);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .cart-item-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: var(--butter);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .cart-item-info { flex: 1; }
+
+        .cart-item-name {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--espresso);
+        }
+
+        .cart-item-price {
+            font-family: 'Lato', sans-serif;
+            font-size: 13px;
+            color: var(--caramel);
+            margin-top: 3px;
+        }
+
+        .cart-item-del {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: rgba(61, 32, 8, 0.3);
+            font-size: 16px;
+            padding: 4px;
+            transition: color 0.2s;
+        }
+
+        .cart-item-del:hover { color: #c0392b; }
+
+        .cart-footer {
+            padding: 20px 24px;
+            border-top: 1px solid rgba(200, 133, 58, 0.15);
+            background: var(--warm-white);
+        }
+
+        .cart-total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 16px;
+        }
+
+        .cart-total-label {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 14px;
+            color: rgba(61, 32, 8, 0.6);
+        }
+
+        .cart-total-amount {
+            font-family: 'Lato', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--espresso);
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--espresso);
+            color: var(--cream);
+            border: none;
+            border-radius: 12px;
+            font-family: 'Noto Serif TC', serif;
+            font-size: 15px;
+            letter-spacing: 0.15em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checkout-btn:hover {
+            background: var(--dark-caramel);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(61, 32, 8, 0.25);
+        }
+
+        /* ── BACK TO TOP ── */
         #backToTop {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background-color: #f4d3a2;
-            color: #8B4513;
+            bottom: 32px;
+            right: 32px;
+            width: 48px;
+            height: 48px;
+            background: var(--espresso);
+            color: var(--cream);
             border: none;
-            padding: 10px 15px;
             border-radius: 50%;
-            font-size: 20px;
+            font-size: 18px;
             cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-            display: none; /* 一開始隱藏 */
-            z-index: 1000;
-            transition: background 0.3s;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 16px rgba(61, 32, 8, 0.3);
+            z-index: 600;
+            transition: all 0.3s ease;
         }
 
         #backToTop:hover {
-            background-color: #e0b87c;
+            background: var(--caramel);
+            transform: translateY(-3px);
         }
 
+        #backToTop.visible { display: flex; }
+
+        /* ── TOAST NOTIFICATION ── */
+        .toast {
+            position: fixed;
+            bottom: 96px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: var(--espresso);
+            color: var(--cream);
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-family: 'Noto Serif TC', serif;
+            font-size: 13px;
+            letter-spacing: 0.05em;
+            z-index: 700;
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* ── FOOTER ── */
         footer {
-            background-color: #f4d3a2;
-            color: #8B4513;
+            background: var(--espresso);
+            color: rgba(250, 245, 235, 0.7);
+            padding: 56px 24px 40px;
+            margin-top: 80px;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        @media (min-width: 768px) {
+            .footer-inner { grid-template-columns: 2fr 1fr 1fr; }
+        }
+
+        .footer-brand .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--cream);
+            margin-bottom: 12px;
+        }
+
+        .footer-brand p {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 13px;
+            line-height: 1.8;
+            max-width: 260px;
+        }
+
+        .footer-col h4 {
+            font-family: 'Lato', sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 16px;
+        }
+
+        .footer-col p,
+        .footer-col a {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 13px;
+            line-height: 2;
+            color: rgba(250, 245, 235, 0.6);
+            text-decoration: none;
+        }
+
+        .footer-col a:hover { color: var(--gold); }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 40px auto 0;
+            padding-top: 24px;
+            border-top: 1px solid rgba(250, 245, 235, 0.1);
             text-align: center;
-            padding: 20px 10px;
-            margin-top: 50px;
+            font-family: 'Lato', sans-serif;
+            font-size: 12px;
+            color: rgba(250, 245, 235, 0.3);
+            letter-spacing: 0.08em;
+        }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── SECTION SEPARATOR ── */
+        .section-sep {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .section-sep hr {
+            border: none;
+            border-top: 1px solid rgba(200, 133, 58, 0.12);
+        }
+
+        /* Cake price style */
+        .item-price-multi {
+            font-family: 'Lato', sans-serif;
+            font-size: 12px;
+            color: var(--caramel);
+            font-weight: 600;
+        }
+        /* ── ORDER FORM ── */
+        #step-form { display: flex; flex-direction: column; height: 100%; }
+
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+
+        .form-label {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--espresso);
+        }
+
+        .form-required { color: var(--caramel); }
+
+        .form-input {
+            font-family: 'Noto Serif TC', serif;
             font-size: 14px;
-        }
-
-        footer p {
-            margin: 5px 0;
-        }
-
-        .carousel {
-            max-width: 800px;   /* 控制大小 */
-            margin: 20px auto;  /* 置中 */
-        }
-
-        .carousel img {
-            height: 300px;
-            object-fit: cover; /* 不變形，裁切圖片 */
-        }
-
-        .carousel img {
+            color: var(--ink);
+            background: var(--warm-white);
+            border: 1px solid rgba(200,133,58,0.25);
             border-radius: 10px;
+            padding: 10px 14px;
+            outline: none;
+            transition: border-color 0.2s;
+            width: 100%;
+        }
+
+        .form-input:focus { border-color: var(--caramel); }
+        .form-input::placeholder { color: rgba(61,32,8,0.3); }
+
+        .form-error {
+            font-size: 12px;
+            color: #c0392b;
+            min-height: 16px;
+        }
+
+        .pickup-option {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            padding: 12px 8px;
+            border: 1.5px solid rgba(200,133,58,0.2);
+            border-radius: 10px;
+            cursor: pointer;
+            background: var(--warm-white);
+            transition: all 0.2s;
+            font-family: 'Noto Serif TC', serif;
+            font-size: 13px;
+            color: var(--crust);
+        }
+
+        .pickup-option.selected {
+            border-color: var(--caramel);
+            background: var(--butter);
+            color: var(--espresso);
+        }
+
+        .pickup-icon { font-size: 22px; }
+        /* ── INFO SECTION ── */
+        .info-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        @media (min-width: 768px) {
+            .info-layout { grid-template-columns: 1fr 1fr; }
+        }
+        .info-card {
+            background: var(--warm-white);
+            border: 1px solid rgba(200,133,58,0.15);
+            border-radius: 16px;
+            padding: 24px;
+        }
+        .info-card-title {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--espresso);
+            margin-bottom: 16px;
+        }
+        .hours-grid { display: flex; flex-direction: column; gap: 10px; }
+        .hours-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Noto Serif TC', serif;
+            font-size: 14px;
+            color: var(--ink);
+        }
+        .hours-day { color: rgba(61,32,8,0.65); }
+        .hours-time { font-weight: 500; color: var(--espresso); }
+        .hours-tag {
+            font-size: 12px;
+            padding: 2px 10px;
+            border-radius: 50px;
+            font-family: 'Lato', sans-serif;
+        }
+        .hours-tag.closed { background: rgba(192,57,43,0.1); color: #c0392b; }
+        .info-divider {
+            border: none;
+            border-top: 1px solid rgba(200,133,58,0.15);
+            margin: 20px 0;
+        }
+        .contact-row {
+            display: flex;
+            gap: 12px;
+            font-family: 'Noto Serif TC', serif;
+            font-size: 14px;
+            color: var(--ink);
+            margin-bottom: 8px;
+        }
+        .contact-label {
+            color: rgba(61,32,8,0.5);
+            min-width: 32px;
+        }
+        .contact-link { color: var(--caramel); text-decoration: none; }
+        .contact-link:hover { text-decoration: underline; }
+        .call-btn {
+            display: block;
+            margin-top: 16px;
+            background: var(--espresso);
+            color: var(--cream);
+            text-align: center;
+            padding: 12px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-family: 'Noto Serif TC', serif;
+            font-size: 14px;
+            letter-spacing: 0.05em;
+            transition: all 0.2s;
+        }
+        .call-btn:hover { background: var(--caramel); }
+        .map-card { display: flex; flex-direction: column; }
+        .map-wrap {
+            flex: 1;
+            min-height: 240px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(200,133,58,0.15);
+            margin-bottom: 12px;
+        }
+        .map-btn {
+            display: block;
+            text-align: center;
+            font-family: 'Noto Serif TC', serif;
+            font-size: 13px;
+            color: var(--caramel);
+            text-decoration: none;
+            padding: 10px;
+            border: 1px solid rgba(200,133,58,0.3);
+            border-radius: 10px;
+            transition: all 0.2s;
+        }
+        .map-btn:hover { background: var(--butter); }
+
+        /* ── ORDER CONFIRM ── */
+        .confirm-check {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--espresso);
+            color: var(--gold);
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            animation: popIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275) forwards;
+        }
+        @keyframes popIn {
+            from { transform: scale(0); opacity: 0; }
+            to   { transform: scale(1); opacity: 1; }
+        }
+        .confirm-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--espresso);
+            margin-bottom: 8px;
+        }
+        .confirm-sub {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 14px;
+            color: rgba(61,32,8,0.55);
+            margin-bottom: 24px;
+            line-height: 1.7;
+        }
+        .confirm-summary {
+            background: var(--butter);
+            border-radius: 12px;
+            padding: 16px 20px;
+            width: 100%;
+            text-align: left;
+            margin-bottom: 20px;
+            font-family: 'Noto Serif TC', serif;
+            font-size: 13px;
+            color: var(--espresso);
+        }
+        .confirm-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            color: var(--ink);
+        }
+        .confirm-row.total {
+            border-top: 1px solid rgba(200,133,58,0.25);
+            margin-top: 8px;
+            padding-top: 10px;
+            font-weight: 700;
+            font-size: 15px;
+        }
+        .confirm-meta {
+            font-size: 12px;
+            color: rgba(61,32,8,0.5);
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(200,133,58,0.15);
+            line-height: 1.8;
         }
     </style>
 </head>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 <body>
 
-
-
+<!-- HEADER -->
 <header>
-    <h1>🍞 暖男麵包鋪</h1>
-
-    <div class="cart" onclick="toggleCart()">
-    🛒 <span class="badge">0</span>
+    <div class="logo">
+        <div class="logo-main">🍞 暖男麵包鋪</div>
+        <div class="logo-sub">Warm Bread Bakery</div>
     </div>
-
-    <div id="cart-list" style="display: none; position: fixed; right: 20px; top: 60px; background: #fff8f0; border: 1px solid #ccc; padding: 10px; width: 250px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); border-radius: 10px; z-index: 9999;">
-    <h3>購物車 🛒</h3>
-    <ul id="cart-items"></ul>
-    <p>總金額: NT$<span id="cart-total">0</span></p>
-    <button id="checkout-btn" onclick="checkout()" style="margin-top:10px; padding:5px 10px; cursor:pointer;">送出訂單</button> 
+    <div class="header-actions">
+        <button class="cart-btn" onclick="openCart()">
+            🛒 購物車
+            <span class="cart-badge" id="cart-badge">0</span>
+        </button>
     </div>
 </header>
 
-<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="001.jpg" class="d-block w-100" alt="...">
+<!-- SLIDESHOW -->
+<section class="slideshow-section">
+    <div class="slideshow" id="slideshow">
+        <div class="slide active" style="background: linear-gradient(135deg, #c8853a, #8b5a2b);">
+            <div class="slide-overlay"></div>
+            <div class="slide-caption">
+                <h3>歐式麵包</h3>
+                <p>European Artisan Bread</p>
+            </div>
+        </div>
+        <div class="slide" style="background: linear-gradient(135deg, #8b5a2b, #3d2008);">
+            <div class="slide-overlay"></div>
+            <div class="slide-caption">
+                <h3>手工甜點</h3>
+                <p>Handcrafted Desserts</p>
+            </div>
+        </div>
+        <div class="slide" style="background: linear-gradient(135deg, #6b3a18, #c8853a);">
+            <div class="slide-overlay"></div>
+            <div class="slide-caption">
+                <h3>草莓大福</h3>
+                <p>Strawberry Daifuku</p>
+            </div>
+        </div>
+        <div class="slide-dots" id="slide-dots">
+            <div class="slide-dot active" onclick="goSlide(0)"></div>
+            <div class="slide-dot" onclick="goSlide(1)"></div>
+            <div class="slide-dot" onclick="goSlide(2)"></div>
+        </div>
     </div>
-    <div class="carousel-item">
-      <img src="002.jpg" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="strabarry.jpg" class="d-block w-100" alt="...">
-    </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>
+</section>
 
-<div class="nav">
-    <a href="#european">歐包</a>
-    <a href="#sweet">甜麵包</a>
-    <a href="#buns">餐包</a>
-    <a href="#toast">吐司</a>
-    <a href="#savory">鹹麵包</a>
-    <a href="#dessert">西點</a>
-    <a href="#cakes">蛋糕</a>
-    <a href="#meal-boxes">餐盒</a>
-</div>
+<!-- CATEGORY NAV -->
+<nav class="category-nav">
+    <div class="category-nav-inner">
+        <a href="#european" class="cat-tab">
+            <span class="cat-icon">🌾</span>歐包
+        </a>
+        <a href="#sweet" class="cat-tab">
+            <span class="cat-icon">🍯</span>甜麵包
+        </a>
+        <a href="#buns" class="cat-tab">
+            <span class="cat-icon">🫓</span>餐包
+        </a>
+        <a href="#toast" class="cat-tab">
+            <span class="cat-icon">🍞</span>吐司
+        </a>
+        <a href="#savory" class="cat-tab">
+            <span class="cat-icon">🧅</span>鹹麵包
+        </a>
+        <a href="#dessert" class="cat-tab">
+            <span class="cat-icon">🥐</span>西點
+        </a>
+        <a href="#cakes" class="cat-tab">
+            <span class="cat-icon">🎂</span>蛋糕
+        </a>
+        <a href="#meal-boxes" class="cat-tab">
+            <span class="cat-icon">📦</span>餐盒
+        </a>
+        <a href="#info" class="cat-tab">
+            <span class="cat-icon">📍</span>門市
+        </a>
+    </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main>
 
 <!-- 歐包 -->
-<div class="category" id="european">
-    <h2>歐包 (European Bread)</h2>
-    <div class="menu">
-        <div class="item">
-            <img src="001.jpg" alt="抹茶紅豆乳酪">
-            <h3>抹茶紅豆乳酪</h3>
-            <p>NT$50</p>
-            <button onclick="addToCart('抹茶紅豆乳酪', 50)">加入購物車</button>
-        </div>
-        <div class="item">
-            <img src="002.jpg" alt="亞麻子蔓越莓">
-            <h3>亞麻子蔓越莓</h3>
-            <p>NT$50</p>
-        </div>
-        <div class="item">
-            <img src="003.jpg" alt="芋泥紅豆">
-            <h3>芋泥紅豆</h3>
-            <p>NT$55</p>
-        </div>
-        <div class="item">
-            <img src="004.jpg" alt="綜合穀物">
-            <h3>綜合穀物</h3>
-            <p>NT$50</p>
-        </div>
-        <div class="item">
-            <img src="005.jpg" alt="歐式核桃">
-            <h3>歐式核桃</h3>
-            <p>NT$50</p>
-        </div>
-        <div class="item">
-            <img src="001.jpg" alt="紅茶葡萄乳酪">
-            <h3>紅茶葡萄乳酪</h3>
-            <p>NT$50</p>
-        </div>        
+<section class="section reveal" id="european">
+    <div class="section-header">
+        <h2 class="section-title-zh">歐包</h2>
+        <span class="section-title-en">European Bread</span>
+        <span class="section-count">6 items</span>
     </div>
-</div>
+    <div class="menu-grid">
+        <div class="item-card reveal">
+            <div class="item-img-wrap"><div class="img-placeholder"><image src="001.jpg" alt="抹茶紅豆乳酪"></div></div>
+            <div class="item-body">
+                <div class="item-name">抹茶紅豆乳酪</div>
+                <div class="item-footer">
+                    <div class="item-price"><span class="currency">NT$</span>50</div>
+                    <button class="add-btn" onclick="addToCart('抹茶紅豆乳酪', 50)">+</button>
+                </div>
+            </div>
+        </div>
+        <div class="item-card reveal">
+            <div class="item-img-wrap"><div class="img-placeholder">🌿</div></div>
+            <div class="item-body">
+                <div class="item-name">亞麻子蔓越莓</div>
+                <div class="item-footer">
+                    <div class="item-price"><span class="currency">NT$</span>50</div>
+                    <button class="add-btn" onclick="addToCart('亞麻子蔓越莓', 50)">+</button>
+                </div>
+            </div>
+        </div>
+        <div class="item-card reveal">
+            <div class="item-img-wrap"><div class="img-placeholder">🍠</div></div>
+            <div class="item-body">
+                <div class="item-name">芋泥紅豆</div>
+                <div class="item-footer">
+                    <div class="item-price"><span class="currency">NT$</span>55</div>
+                    <button class="add-btn" onclick="addToCart('芋泥紅豆', 55)">+</button>
+                </div>
+            </div>
+        </div>
+        <div class="item-card reveal">
+            <div class="item-img-wrap"><div class="img-placeholder">🌾</div></div>
+            <div class="item-body">
+                <div class="item-name">綜合穀物</div>
+                <div class="item-footer">
+                    <div class="item-price"><span class="currency">NT$</span>50</div>
+                    <button class="add-btn" onclick="addToCart('綜合穀物', 50)">+</button>
+                </div>
+            </div>
+        </div>
+        <div class="item-card reveal">
+            <div class="item-img-wrap"><div class="img-placeholder">🫘</div></div>
+            <div class="item-body">
+                <div class="item-name">歐式核桃</div>
+                <div class="item-footer">
+                    <div class="item-price"><span class="currency">NT$</span>50</div>
+                    <button class="add-btn" onclick="addToCart('歐式核桃', 50)">+</button>
+                </div>
+            </div>
+        </div>
+        <div class="item-card reveal">
+            <div class="item-img-wrap"><div class="img-placeholder">🍇</div></div>
+            <div class="item-body">
+                <div class="item-name">紅茶葡萄乳酪</div>
+                <div class="item-footer">
+                    <div class="item-price"><span class="currency">NT$</span>50</div>
+                    <button class="add-btn" onclick="addToCart('紅茶葡萄乳酪', 50)">+</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="section-sep"><hr></div>
 
 <!-- 甜麵包 -->
-<div class="category" id="sweet">
-    <h2>甜麵包 (Sweet Bread)</h2>
-    <div class="menu">
-
-        <div class="item"><img src="肉桂捲.jpg" alt="肉桂捲"><h3>肉桂捲</h3><p>NT$42</p></div>
-        <div class="item"><img src="炸彈奶酥麵包.jpg" alt="炸彈奶酥麵包"><h3>炸彈奶酥麵包</h3><p>NT$42</p></div>
-        <div class="item"><img src="奶油田螺.jpg" alt="奶油田螺"><h3>奶油田螺</h3><p>NT$28</p></div>
-        <div class="item"><img src="花生夾心.jpg" alt="花生夾心"><h3>花生夾心</h3><p>NT$25</p></div>
-        <div class="item"><img src="紅豆包.jpg" alt="紅豆包"><h3>紅豆包</h3><p>NT$25</p></div>
-        <div class="item"><img src="克林姆.jpg" alt="克林姆"><h3>克林姆</h3><p>NT$25</p></div>
-        <div class="item"><img src="巧克力大理石.jpg" alt="巧克力大理石"><h3>巧克力大理石</h3><p>NT$65</p></div>
-        <div class="item"><img src="椰香蔓越莓.jpg" alt="椰香蔓越莓"><h3>椰香蔓越莓</h3><p>NT$50</p></div>
-        <div class="item"><img src="木材麵包.jpg" alt="木材麵包"><h3>木材麵包</h3><p>NT$55</p></div>
-        <div class="item"><img src="古早味甜甜圈.jpg" alt="古早味甜甜圈"><h3>古早味甜甜圈</h3><p>NT$22</p></div>
-        <div class="item"><img src="小可頌.jpg" alt="小可頌"><h3>小可頌</h3><p>NT$65</p></div>
-        <div class="item"><img src="牛角麵包.jpg" alt="牛角麵包"><h3>牛角麵包</h3><p>NT$38</p></div>
-        <div class="item"><img src="芝麻貝果.jpg" alt="芝麻貝果"><h3>芝麻貝果</h3><p>NT$42</p></div>
-        <div class="item"><img src="蔓越莓起司貝果.jpg" alt="⭐ 蔓越莓起司貝果"><h3>⭐ 蔓越莓起司貝果</h3><p>NT$45</p></div>
-        <div class="item"><img src="韓國麻薯.jpg" alt="韓國麻薯"><h3>韓國麻薯</h3><p>NT$20</p></div>
-        <div class="item"><img src="維也納.jpg" alt="維也納"><h3>維也納</h3><p>NT$150</p></div>
-
+<section class="section reveal" id="sweet">
+    <div class="section-header">
+        <h2 class="section-title-zh">甜麵包</h2>
+        <span class="section-title-en">Sweet Bread</span>
+        <span class="section-count">16 items</span>
     </div>
-</div>
+    <div class="menu-grid">
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🌀</div></div><div class="item-body"><div class="item-name">肉桂捲</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>42</div><button class="add-btn" onclick="addToCart('肉桂捲', 42)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">💣</div></div><div class="item-body"><div class="item-name">炸彈奶酥麵包</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>42</div><button class="add-btn" onclick="addToCart('炸彈奶酥麵包', 42)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🥐</div></div><div class="item-body"><div class="item-name">奶油田螺</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>28</div><button class="add-btn" onclick="addToCart('奶油田螺', 28)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🥜</div></div><div class="item-body"><div class="item-name">花生夾心</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>25</div><button class="add-btn" onclick="addToCart('花生夾心', 25)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🫘</div></div><div class="item-body"><div class="item-name">紅豆包</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>25</div><button class="add-btn" onclick="addToCart('紅豆包', 25)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🍮</div></div><div class="item-body"><div class="item-name">克林姆</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>25</div><button class="add-btn" onclick="addToCart('克林姆', 25)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🍫</div></div><div class="item-body"><div class="item-name">巧克力大理石</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>65</div><button class="add-btn" onclick="addToCart('巧克力大理石', 65)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🥥</div></div><div class="item-body"><div class="item-name">椰香蔓越莓</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>50</div><button class="add-btn" onclick="addToCart('椰香蔓越莓', 50)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🪵</div></div><div class="item-body"><div class="item-name">木材麵包</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>55</div><button class="add-btn" onclick="addToCart('木材麵包', 55)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🍩</div></div><div class="item-body"><div class="item-name">古早味甜甜圈</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>22</div><button class="add-btn" onclick="addToCart('古早味甜甜圈', 22)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🥐</div></div><div class="item-body"><div class="item-name">小可頌</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>65</div><button class="add-btn" onclick="addToCart('小可頌', 65)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🐂</div></div><div class="item-body"><div class="item-name">牛角麵包</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>38</div><button class="add-btn" onclick="addToCart('牛角麵包', 38)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">⭕</div></div><div class="item-body"><div class="item-name">芝麻貝果</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>42</div><button class="add-btn" onclick="addToCart('芝麻貝果', 42)">+</button></div></div></div>
+        <div class="item-card reveal">
+            <div class="item-img-wrap"><div class="img-placeholder">🫐</div><div class="item-badge">⭐ 推薦</div></div>
+            <div class="item-body"><div class="item-name">蔓越莓起司貝果</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>45</div><button class="add-btn" onclick="addToCart('蔓越莓起司貝果', 45)">+</button></div></div>
+        </div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🟡</div></div><div class="item-body"><div class="item-name">韓國麻薯</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>20</div><button class="add-btn" onclick="addToCart('韓國麻薯', 20)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🎻</div></div><div class="item-body"><div class="item-name">維也納</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>150</div><button class="add-btn" onclick="addToCart('維也納', 150)">+</button></div></div></div>
+    </div>
+</section>
+
+<div class="section-sep"><hr></div>
 
 <!-- 餐包 -->
-<div class="category" id="buns">
-    <h2>餐包 (Buns)</h2>
-    <div class="menu">
-
-        <div class="item"><img src="奶酥餐包.jpg" alt="奶酥餐包"><h3>奶酥餐包</h3><p>NT$40</p></div>
-        <div class="item"><img src="葡萄餐包.jpg" alt="葡萄餐包"><h3>葡萄餐包</h3><p>NT$40</p></div>
-        <div class="item"><img src="黑眼豆豆餐包.jpg" alt="黑眼豆豆餐包"><h3>⭐ 黑眼豆豆餐包</h3><p>NT$45</p></div>
-        <div class="item"><img src="脆腸餐包.jpg" alt="脆腸餐包"><h3>脆腸餐包</h3><p>NT$50</p></div>
-        <div class="item"><img src="核桃乳酪餐包.jpg" alt="核桃乳酪餐包"><h3>核桃乳酪餐包</h3><p>NT$42</p></div>
-        <div class="item"><img src="奶油餐包.jpg" alt="奶油餐包"><h3>奶油餐包</h3><p>NT$40</p></div>
-        <div class="item"><img src="菠蘿餐包.jpg" alt="菠蘿餐包"><h3>菠蘿餐包</h3><p>NT$45</p></div>
-        <div class="item"><img src="乳酪三兄弟.jpg" alt="⭐ 乳酪三兄弟"><h3>⭐ 乳酪三兄弟</h3><p>NT$50</p></div>
-
+<section class="section reveal" id="buns">
+    <div class="section-header">
+        <h2 class="section-title-zh">餐包</h2>
+        <span class="section-title-en">Buns</span>
+        <span class="section-count">8 items</span>
     </div>
-</div>
+    <div class="menu-grid">
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🧈</div></div><div class="item-body"><div class="item-name">奶酥餐包</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>40</div><button class="add-btn" onclick="addToCart('奶酥餐包', 40)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🍇</div></div><div class="item-body"><div class="item-name">葡萄餐包</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>40</div><button class="add-btn" onclick="addToCart('葡萄餐包', 40)">+</button></div></div></div>
+        <div class="item-card reveal">
+            <div class="item-img-wrap"><div class="img-placeholder">🫘</div><div class="item-badge">⭐ 推薦</div></div>
+            <div class="item-body"><div class="item-name">黑眼豆豆餐包</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>45</div><button class="add-btn" onclick="addToCart('黑眼豆豆餐包', 45)">+</button></div></div>
+        </div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🌭</div></div><div class="item-body"><div class="item-name">脆腸餐包</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>50</div><button class="add-btn" onclick="addToCart('脆腸餐包', 50)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🧀</div></div><div class="item-body"><div class="item-name">核桃乳酪餐包</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>42</div><button class="add-btn" onclick="addToCart('核桃乳酪餐包', 42)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🧈</div></div><div class="item-body"><div class="item-name">奶油餐包</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>40</div><button class="add-btn" onclick="addToCart('奶油餐包', 40)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🍍</div></div><div class="item-body"><div class="item-name">菠蘿餐包</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>45</div><button class="add-btn" onclick="addToCart('菠蘿餐包', 45)">+</button></div></div></div>
+        <div class="item-card reveal">
+            <div class="item-img-wrap"><div class="img-placeholder">🧀</div><div class="item-badge">⭐ 推薦</div></div>
+            <div class="item-body"><div class="item-name">乳酪三兄弟</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>50</div><button class="add-btn" onclick="addToCart('乳酪三兄弟', 50)">+</button></div></div>
+        </div>
+    </div>
+</section>
+
+<div class="section-sep"><hr></div>
 
 <!-- 吐司 -->
-<div class="category" id="toast">
-    <h2>吐司 (Toast)</h2>
-    <div class="menu">
-
-        <div class="item"><img src="葡萄吐司.jpg" alt="葡萄吐司"><h3>葡萄吐司</h3><p>NT$50</p></div>
-        <div class="item"><img src="全麥核桃吐司.jpg" alt="全麥核桃吐司"><h3>全麥核桃吐司</h3><p>NT$50</p></div>
-        <div class="item"><img src="菠蘿奶酥吐司.jpg" alt="菠蘿奶酥吐司"><h3>菠蘿奶酥吐司</h3><p>NT$80</p></div>
-        <div class="item"><img src="芋泥吐司.jpg" alt="芋泥吐司"><h3>芋泥吐司</h3><p>NT$70</p></div>
-        <div class="item"><img src="紅豆吐司.jpg" alt="紅豆吐司"><h3>紅豆吐司</h3><p>NT$70</p></div>
-        <div class="item"><img src="養生黑芝麻吐司.jpg" alt="養生黑芝麻吐司"><h3>養生黑芝麻吐司</h3><p>NT$70</p></div>
-        <div class="item"><img src="紅豆黑糖麻吉吐司.jpg" alt="紅豆黑糖麻吉吐司"><h3>⭐ 紅豆黑糖麻吉吐司</h3><p>NT$75</p></div>
-        <div class="item"><img src="起司核桃吐司.jpg" alt="起司核桃吐司"><h3>⭐ 起司核桃吐司</h3><p>NT$70</p></div>
-        <div class="item"><img src="火腿起司吐司.jpg" alt="火腿起司吐司"><h3>⭐ 火腿起司吐司</h3><p>NT$70</p></div>
-        <div class="item"><img src="白吐司.jpg" alt="白吐司 (薄片)"><h3>白吐司 (薄片)</h3><p>NT$55</p></div>
-        <div class="item"><img src="白吐司.jpg" alt="白吐司 (厚片)"><h3>白吐司 (厚片)</h3><p>NT$55</p></div>
-        <div class="item"><img src="海鹽吐司.jpg" alt="海鹽吐司"><h3>海鹽吐司</h3><p>NT$50</p></div>
-        <div class="item"><img src="咖啡奶酥吐司.jpg" alt="咖啡奶酥吐司"><h3>⭐ 咖啡奶酥吐司</h3><p>NT$80</p></div>
-
+<section class="section reveal" id="toast">
+    <div class="section-header">
+        <h2 class="section-title-zh">吐司</h2>
+        <span class="section-title-en">Toast</span>
+        <span class="section-count">13 items</span>
     </div>
-</div>
+    <div class="menu-grid">
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🍇</div></div><div class="item-body"><div class="item-name">葡萄吐司</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>50</div><button class="add-btn" onclick="addToCart('葡萄吐司', 50)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🌾</div></div><div class="item-body"><div class="item-name">全麥核桃吐司</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>50</div><button class="add-btn" onclick="addToCart('全麥核桃吐司', 50)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🍍</div></div><div class="item-body"><div class="item-name">菠蘿奶酥吐司</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>80</div><button class="add-btn" onclick="addToCart('菠蘿奶酥吐司', 80)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🍠</div></div><div class="item-body"><div class="item-name">芋泥吐司</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>70</div><button class="add-btn" onclick="addToCart('芋泥吐司', 70)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🫘</div></div><div class="item-body"><div class="item-name">紅豆吐司</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>70</div><button class="add-btn" onclick="addToCart('紅豆吐司', 70)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">⚫</div></div><div class="item-body"><div class="item-name">養生黑芝麻吐司</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>70</div><button class="add-btn" onclick="addToCart('養生黑芝麻吐司', 70)">+</button></div></div></div>
+        <div class="item-card reveal">
+            <div class="item-img-wrap"><div class="img-placeholder">🟤</div><div class="item-badge">⭐ 推薦</div></div>
+            <div class="item-body"><div class="item-name">紅豆黑糖麻吉吐司</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>75</div><button class="add-btn" onclick="addToCart('紅豆黑糖麻吉吐司', 75)">+</button></div></div>
+        </div>
+        <div class="item-card reveal">
+            <div class="item-img-wrap"><div class="img-placeholder">🧀</div><div class="item-badge">⭐ 推薦</div></div>
+            <div class="item-body"><div class="item-name">起司核桃吐司</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>70</div><button class="add-btn" onclick="addToCart('起司核桃吐司', 70)">+</button></div></div>
+        </div>
+        <div class="item-card reveal">
+            <div class="item-img-wrap"><div class="img-placeholder">🥩</div><div class="item-badge">⭐ 推薦</div></div>
+            <div class="item-body"><div class="item-name">火腿起司吐司</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>70</div><button class="add-btn" onclick="addToCart('火腿起司吐司', 70)">+</button></div></div>
+        </div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">⬜</div></div><div class="item-body"><div class="item-name">白吐司（薄片）</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>55</div><button class="add-btn" onclick="addToCart('白吐司（薄片）', 55)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">⬛</div></div><div class="item-body"><div class="item-name">白吐司（厚片）</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>55</div><button class="add-btn" onclick="addToCart('白吐司（厚片）', 55)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🌊</div></div><div class="item-body"><div class="item-name">海鹽吐司</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>50</div><button class="add-btn" onclick="addToCart('海鹽吐司', 50)">+</button></div></div></div>
+        <div class="item-card reveal">
+            <div class="item-img-wrap"><div class="img-placeholder">☕</div><div class="item-badge">⭐ 推薦</div></div>
+            <div class="item-body"><div class="item-name">咖啡奶酥吐司</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>80</div><button class="add-btn" onclick="addToCart('咖啡奶酥吐司', 80)">+</button></div></div>
+        </div>
+    </div>
+</section>
+
+<div class="section-sep"><hr></div>
 
 <!-- 鹹麵包 -->
-<div class="category" id="savory">
-    <h2>鹹麵包 (Savory Bread)</h2>
-    <div class="menu">
-
-        <div class="item"><img src="起酥肉鬆.jpg" alt="起酥肉鬆"><h3>起酥肉鬆</h3><p>NT$42</p></div>
-        <div class="item"><img src="香蔥肉鬆.jpg" alt="香蔥肉鬆"><h3>香蔥肉鬆</h3><p>NT$45</p></div>
-        <div class="item"><img src="特濃起司條.jpg" alt="特濃起司條"><h3>特濃起司條</h3><p>NT$35</p></div>
-        <div class="item"><img src="肉鬆麵包.jpg" alt="肉鬆麵包"><h3>肉鬆麵包</h3><p>NT$35</p></div>
-        <div class="item"><img src="熱狗堡.jpg" alt="熱狗堡"><h3>熱狗堡</h3><p>NT$50</p></div>
-        <div class="item"><img src="軟法.jpg" alt="蒜香軟法"><h3>蒜香軟法</h3><p>NT$50</p></div>
-        <div class="item"><img src="香芋肉脯.jpg" alt="香芋肉脯"><h3>⭐ 香芋肉脯</h3><p>NT$50</p></div>
-        <div class="item"><img src="蔥仔包.jpg" alt="蔥仔包"><h3>蔥仔包</h3><p>NT$42</p></div>
-        <div class="item"><img src="羅宋.jpg" alt="招牌羅宋"><h3>⭐ 招牌羅宋</h3><p>NT$50</p></div>
-
+<section class="section reveal" id="savory">
+    <div class="section-header">
+        <h2 class="section-title-zh">鹹麵包</h2>
+        <span class="section-title-en">Savory Bread</span>
+        <span class="section-count">9 items</span>
     </div>
-</div>
+    <div class="menu-grid">
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🥩</div></div><div class="item-body"><div class="item-name">起酥肉鬆</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>42</div><button class="add-btn" onclick="addToCart('起酥肉鬆', 42)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🧅</div></div><div class="item-body"><div class="item-name">香蔥肉鬆</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>45</div><button class="add-btn" onclick="addToCart('香蔥肉鬆', 45)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🧀</div></div><div class="item-body"><div class="item-name">特濃起司條</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>35</div><button class="add-btn" onclick="addToCart('特濃起司條', 35)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🥩</div></div><div class="item-body"><div class="item-name">肉鬆麵包</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>35</div><button class="add-btn" onclick="addToCart('肉鬆麵包', 35)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🌭</div></div><div class="item-body"><div class="item-name">熱狗堡</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>50</div><button class="add-btn" onclick="addToCart('熱狗堡', 50)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🧄</div></div><div class="item-body"><div class="item-name">蒜香軟法</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>50</div><button class="add-btn" onclick="addToCart('蒜香軟法', 50)">+</button></div></div></div>
+        <div class="item-card reveal">
+            <div class="item-img-wrap"><div class="img-placeholder">🍠</div><div class="item-badge">⭐ 推薦</div></div>
+            <div class="item-body"><div class="item-name">香芋肉脯</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>50</div><button class="add-btn" onclick="addToCart('香芋肉脯', 50)">+</button></div></div>
+        </div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🌿</div></div><div class="item-body"><div class="item-name">蔥仔包</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>42</div><button class="add-btn" onclick="addToCart('蔥仔包', 42)">+</button></div></div></div>
+        <div class="item-card reveal">
+            <div class="item-img-wrap"><div class="img-placeholder">🏆</div><div class="item-badge">⭐ 招牌</div></div>
+            <div class="item-body"><div class="item-name">招牌羅宋</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>50</div><button class="add-btn" onclick="addToCart('招牌羅宋', 50)">+</button></div></div>
+        </div>
+    </div>
+</section>
+
+<div class="section-sep"><hr></div>
 
 <!-- 西點 -->
-<div class="category" id="dessert">
-    <h2>西點 (Pastries/Desserts)</h2>
-    <div class="menu">
-
-        <div class="item"><img src="巧克力三明治.jpg" alt="巧克力三明治"><h3>巧克力三明治</h3><p>NT$40</p></div>
-        <div class="item"><img src="起酥蛋糕.jpg" alt="起酥蛋糕"><h3>起酥蛋糕</h3><p>NT$30</p></div>
-        <div class="item"><img src="乳酪蛋糕.jpg" alt="乳酪蛋糕"><h3>乳酪蛋糕</h3><p>NT$35</p></div>
-        <div class="item"><img src="台式馬卡龍.jpg" alt="台式馬卡龍"><h3>⭐ 台式馬卡龍</h3><p>NT$70</p></div>
-        <div class="item"><img src="太陽餅.jpg" alt="太陽餅"><h3>太陽餅</h3><p>NT$30</p></div>
-        <div class="item"><img src="蜂蜜蛋糕.jpg" alt="蜂蜜蛋糕"><h3>蜂蜜蛋糕</h3><p>NT$40</p></div>
-        <div class="item"><img src="檸檬塔.jpg" alt="檸檬塔"><h3>檸檬塔</h3><p>NT$55</p></div>
-        <div class="item"><img src="巴斯克乳酪.jpg" alt="巴斯克乳酪"><h3>巴斯克乳酪</h3><p>NT$65</p></div>
-        <div class="item"><img src="黃金小乳酪.jpg" alt="黃金小乳酪"><h3>黃金小乳酪</h3><p>NT$50</p></div>
-        <div class="item"><img src="香草泡芙.jpg" alt="香草泡芙"><h3>⭐ 香草泡芙</h3><p>NT$70</p></div>
-        <div class="item"><img src="strabarry.jpg" alt="草莓大福(三入)"><h3>⭐ 草莓大福(三入)</h3><p>NT$90</p></div>
+<section class="section reveal" id="dessert">
+    <div class="section-header">
+        <h2 class="section-title-zh">西點</h2>
+        <span class="section-title-en">Pastries & Desserts</span>
+        <span class="section-count">11 items</span>
     </div>
-</div>
+    <div class="menu-grid">
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🍫</div></div><div class="item-body"><div class="item-name">巧克力三明治</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>40</div><button class="add-btn" onclick="addToCart('巧克力三明治', 40)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🎂</div></div><div class="item-body"><div class="item-name">起酥蛋糕</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>30</div><button class="add-btn" onclick="addToCart('起酥蛋糕', 30)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🧀</div></div><div class="item-body"><div class="item-name">乳酪蛋糕</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>35</div><button class="add-btn" onclick="addToCart('乳酪蛋糕', 35)">+</button></div></div></div>
+        <div class="item-card reveal">
+            <div class="item-img-wrap"><div class="img-placeholder">🌸</div><div class="item-badge">⭐ 推薦</div></div>
+            <div class="item-body"><div class="item-name">台式馬卡龍</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>70</div><button class="add-btn" onclick="addToCart('台式馬卡龍', 70)">+</button></div></div>
+        </div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">☀️</div></div><div class="item-body"><div class="item-name">太陽餅</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>30</div><button class="add-btn" onclick="addToCart('太陽餅', 30)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🍯</div></div><div class="item-body"><div class="item-name">蜂蜜蛋糕</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>40</div><button class="add-btn" onclick="addToCart('蜂蜜蛋糕', 40)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🍋</div></div><div class="item-body"><div class="item-name">檸檬塔</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>55</div><button class="add-btn" onclick="addToCart('檸檬塔', 55)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🫙</div></div><div class="item-body"><div class="item-name">巴斯克乳酪</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>65</div><button class="add-btn" onclick="addToCart('巴斯克乳酪', 65)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🟡</div></div><div class="item-body"><div class="item-name">黃金小乳酪</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>50</div><button class="add-btn" onclick="addToCart('黃金小乳酪', 50)">+</button></div></div></div>
+        <div class="item-card reveal">
+            <div class="item-img-wrap"><div class="img-placeholder">💨</div><div class="item-badge">⭐ 推薦</div></div>
+            <div class="item-body"><div class="item-name">香草泡芙</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>70</div><button class="add-btn" onclick="addToCart('香草泡芙', 70)">+</button></div></div>
+        </div>
+        <div class="item-card reveal">
+            <div class="item-img-wrap"><div class="img-placeholder">🍓</div><div class="item-badge">⭐ 推薦</div></div>
+            <div class="item-body"><div class="item-name">草莓大福（三入）</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>90</div><button class="add-btn" onclick="addToCart('草莓大福（三入）', 90)">+</button></div></div>
+        </div>
+    </div>
+</section>
+
+<div class="section-sep"><hr></div>
 
 <!-- 蛋糕 -->
-<div class="category" id="cakes">
-    <h2>蛋糕 (Cakes)</h2>
-    <div class="menu">
-        <div class="item"><img src="黑森林蛋糕.jpg" alt="黑森林蛋糕"><h3>黑森林蛋糕 6吋/8吋/10吋</h3><p>NT$600/700/1000</p></div>
-        <div class="item"><img src="蜘蛛人蛋糕.jpg" alt="蜘蛛人蛋糕"><h3>蜘蛛人蛋糕 6吋/8吋/10吋</h3><p>NT$600/700/1000</p></div>
-        <div class="item"><img src="奧特曼蛋糕.jpg" alt="奧特曼蛋糕"><h3>奧特曼蛋糕 6吋/8吋/10吋</h3><p>NT$600/700/1000</p></div>
-        <div class="item"><img src="賣塊蛋糕.jpg" alt="賣塊蛋糕"><h3>賣塊蛋糕 6吋/8吋/10吋</h3><p>NT$600/700/1000</p></div>
-        <div class="item"><img src="汪汪隊蛋糕.jpg" alt="汪汪隊蛋糕"><h3>汪汪隊蛋糕 6吋/8吋/10吋</h3><p>NT$600/700/1000</p></div>
-        <div class="item"><img src="大耳狗蛋糕.jpg" alt="大耳狗蛋糕"><h3>大耳狗蛋糕 6吋/8吋/10吋</h3><p>NT$600/700/1000</p></div>
+<section class="section reveal" id="cakes">
+    <div class="section-header">
+        <h2 class="section-title-zh">蛋糕</h2>
+        <span class="section-title-en">Celebration Cakes</span>
+        <span class="section-count">6 designs</span>
     </div>
-</div>
+    <div class="menu-grid">
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🍒</div></div><div class="item-body"><div class="item-name">黑森林蛋糕</div><div class="item-footer"><div class="item-price-multi">6" NT$600 / 8" NT$700 / 10" NT$1000</div></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🕷️</div></div><div class="item-body"><div class="item-name">蜘蛛人蛋糕</div><div class="item-footer"><div class="item-price-multi">6" NT$600 / 8" NT$700 / 10" NT$1000</div></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">⚡</div></div><div class="item-body"><div class="item-name">奧特曼蛋糕</div><div class="item-footer"><div class="item-price-multi">6" NT$600 / 8" NT$700 / 10" NT$1000</div></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🎊</div></div><div class="item-body"><div class="item-name">賣塊蛋糕</div><div class="item-footer"><div class="item-price-multi">6" NT$600 / 8" NT$700 / 10" NT$1000</div></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🐾</div></div><div class="item-body"><div class="item-name">汪汪隊蛋糕</div><div class="item-footer"><div class="item-price-multi">6" NT$600 / 8" NT$700 / 10" NT$1000</div></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🐕</div></div><div class="item-body"><div class="item-name">大耳狗蛋糕</div><div class="item-footer"><div class="item-price-multi">6" NT$600 / 8" NT$700 / 10" NT$1000</div></div></div></div>
+    </div>
+</section>
+
+<div class="section-sep"><hr></div>
 
 <!-- 餐盒 -->
-<div class="category" id="meal-boxes">
-    <h2>餐盒 (Meal Boxes)</h2>
-    <div class="menu">
-        <div class="item"><img src="經典餐盒.jpg" alt="經典餐盒"><h3>經典餐盒</h3><p>NT$70</p></div>
-        <div class="item"><img src="豪華餐盒.jpg" alt="豪華餐盒"><h3>豪華餐盒</h3><p>NT$100</p></div>
-        <div class="item"><img src="素食餐盒.jpg" alt="素食餐盒"><h3>素食餐盒</h3><p>NT$80</p></div>
+<section class="section reveal" id="meal-boxes">
+    <div class="section-header">
+        <h2 class="section-title-zh">餐盒</h2>
+        <span class="section-title-en">Meal Boxes</span>
+        <span class="section-count">3 items</span>
     </div>
+    <div class="menu-grid">
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">📦</div></div><div class="item-body"><div class="item-name">經典餐盒</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>70</div><button class="add-btn" onclick="addToCart('經典餐盒', 70)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">✨</div></div><div class="item-body"><div class="item-name">豪華餐盒</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>100</div><button class="add-btn" onclick="addToCart('豪華餐盒', 100)">+</button></div></div></div>
+        <div class="item-card reveal"><div class="item-img-wrap"><div class="img-placeholder">🥦</div></div><div class="item-body"><div class="item-name">素食餐盒</div><div class="item-footer"><div class="item-price"><span class="currency">NT$</span>80</div><button class="add-btn" onclick="addToCart('素食餐盒', 80)">+</button></div></div></div>
+    </div>
+</section>
+
+
+<div class="section-sep"><hr></div>
+
+<!-- 營業時間 + 地圖 -->
+<section class="section reveal" id="info">
+    <div class="section-header">
+        <h2 class="section-title-zh">門市資訊</h2>
+        <span class="section-title-en">Store Info</span>
+    </div>
+    <div class="info-layout">
+
+        <!-- 營業時間 -->
+        <div class="info-card">
+            <div class="info-card-title">🕐 營業時間</div>
+            <div class="hours-grid">
+                <div class="hours-row">
+                    <span class="hours-day">週一</span>
+                    <span class="hours-tag closed">公休</span>
+                </div>
+                <div class="hours-row">
+                    <span class="hours-day">週二 — 週五</span>
+                    <span class="hours-time">07:00 – 19:00</span>
+                </div>
+                <div class="hours-row">
+                    <span class="hours-day">週六 — 週日</span>
+                    <span class="hours-time">07:00 – 18:00</span>
+                </div>
+            </div>
+            <div class="info-divider"></div>
+            <div class="info-card-title" style="margin-bottom:12px;">📍 地址 & 聯絡</div>
+            <div class="contact-row">
+                <span class="contact-label">地址</span>
+                <span>新北市蘆洲區信義路222巷35號</span>
+            </div>
+            <div class="contact-row">
+                <span class="contact-label">電話</span>
+                <a href="tel:0282858625" class="contact-link">02-8285-8625</a>
+            </div>
+            <a href="tel:0282858625" class="call-btn">📞 立即來電</a>
+        </div>
+
+        <!-- Google Maps embed -->
+        <div class="info-card map-card">
+            <div class="info-card-title" style="margin-bottom:12px;">🗺 找到我們</div>
+            <div class="map-wrap">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3613.7!2d121.4736!3d25.0844!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442a8e6b5c3b1c3%3A0x1!2z5paw5YyX5biC6IiH5riv5Y2A5L-h576p6Lev222Wq+Wtl!5e0!3m2!1szh-TW!2stw!4v1680000000000"
+                    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+            <a href="https://maps.google.com/?q=新北市蘆洲區信義路222巷35號" target="_blank" class="map-btn">在 Google Maps 開啟 →</a>
+        </div>
+
+    </div>
+</section>
+
+</main>
+
+<!-- BACK TO TOP -->
+<button id="backToTop" aria-label="回到頂端">↑</button>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- CART OVERLAY & PANEL -->
+<div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+<div class="cart-panel" id="cart-panel">
+
+    <!-- STEP 1: 購物車 -->
+    <div id="step-cart" style="display:flex;flex-direction:column;height:100%;">
+        <div class="cart-header">
+            <h2 class="cart-title">購物車</h2>
+            <button class="cart-close" onclick="closeCart()">✕</button>
+        </div>
+        <div class="cart-body" id="cart-body">
+            <div class="cart-empty">
+                <div class="empty-icon">🛒</div>
+                <p>購物車是空的<br>快去挑選美味麵包吧！</p>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total-row">
+                <span class="cart-total-label">合計金額</span>
+                <span class="cart-total-amount">NT$ <span id="cart-total">0</span></span>
+            </div>
+            <button class="checkout-btn" onclick="goToOrderForm()">填寫訂購資料 →</button>
+        </div>
+    </div>
+
+    <!-- STEP 2: 填寫資料 -->
+    <div id="step-form" style="display:none; display:flex; flex-direction:column; height:100%;">
+        <div class="cart-header">
+            <div style="display:flex;align-items:center;gap:10px;">
+                <button class="cart-close" onclick="backToCart()" style="font-size:14px;">←</button>
+                <h2 class="cart-title">填寫資料</h2>
+            </div>
+            <button class="cart-close" onclick="closeCart()">✕</button>
+        </div>
+
+        <div class="cart-body" style="flex:1;overflow-y:auto;">
+
+            <!-- 訂單摘要 -->
+            <div id="order-summary" style="background:var(--butter);border-radius:12px;padding:14px 16px;margin-bottom:20px;"></div>
+
+            <!-- 表單 -->
+            <div style="display:flex;flex-direction:column;gap:16px;">
+
+                <div class="form-group">
+                    <label class="form-label">姓名 <span class="form-required">*</span></label>
+                    <input class="form-input" id="field-name" type="text" placeholder="請輸入您的姓名">
+                    <div class="form-error" id="err-name"></div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">電話 <span class="form-required">*</span></label>
+                    <input class="form-input" id="field-phone" type="tel" placeholder="例：0912-345-678">
+                    <div class="form-error" id="err-phone"></div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">取貨方式 <span class="form-required">*</span></label>
+                    <div style="display:flex;gap:8px;margin-top:4px;">
+                        <label class="pickup-option" id="opt-store">
+                            <input type="radio" name="pickup" value="store" checked style="display:none;">
+                            <span class="pickup-icon">🏪</span>
+                            <span>門市自取</span>
+                        </label>
+                        <label class="pickup-option" id="opt-delivery">
+                            <input type="radio" name="pickup" value="delivery" style="display:none;">
+                            <span class="pickup-icon">🛵</span>
+                            <span>外送</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group" id="group-address" style="display:none;">
+                    <label class="form-label">外送地址 <span class="form-required">*</span></label>
+                    <input class="form-input" id="field-address" type="text" placeholder="請輸入完整地址">
+                    <div class="form-error" id="err-address"></div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">取貨時間</label>
+                    <input class="form-input" id="field-time" type="datetime-local">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">備註</label>
+                    <textarea class="form-input" id="field-note" rows="3" placeholder="例：不要加辣、幫忙切片…" style="resize:none;"></textarea>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="cart-footer">
+            <div class="cart-total-row">
+                <span class="cart-total-label">合計金額</span>
+                <span class="cart-total-amount">NT$ <span id="cart-total-2">0</span></span>
+            </div>
+            <button class="checkout-btn" onclick="submitOrder()">確認送出訂單</button>
+        </div>
+    </div>
+
+    <!-- STEP 3: 訂單確認 -->
+    <div id="step-confirm" style="display:none;flex-direction:column;height:100%;align-items:center;justify-content:center;padding:32px 24px;text-align:center;">
+        <div class="confirm-check">✓</div>
+        <h2 class="confirm-title">訂單已送出！</h2>
+        <p class="confirm-sub">感謝您的訂購，我們會盡快為您準備</p>
+        <div id="confirm-summary" class="confirm-summary"></div>
+        <button class="checkout-btn" onclick="finishOrder()" style="margin-top:8px;">繼續購物</button>
+    </div>
+
 </div>
-
-<button id="backToTop">⬆ 回到頂端</button>
-
-<script>
-const btn = document.getElementById("backToTop");
-
-// 當滾動超過 200px 才顯示
-window.onscroll = function() {
-    if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-        btn.style.display = "block";
-    } else {
-        btn.style.display = "none";
-    }
-};
-
-// 點擊回到最上面
-btn.addEventListener("click", () => {
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"  // 平滑滾動
-    });
-});
-
-let cart = [];
-
-function addToCart(name, price) {
-    cart.push({ name: name, price: price });
-    document.querySelector('.badge').innerText = cart.length;
-    alert(name + " 已加入購物車 🛒");
-}
-
-function toggleCart() {
-    const cartDiv = document.getElementById('cart-list');
-    if (cartDiv.style.display === 'none') {
-        cartDiv.style.display = 'block';
-        updateCartList();
-    } else {
-        cartDiv.style.display = 'none';
-    }
-}
-
-function updateCartList() {
-    const cartItems = document.getElementById('cart-items');
-    const cartTotal = document.getElementById('cart-total');
-
-    cartItems.innerHTML = '';
-    let total = 0;
-
-    cart.forEach((item, index) => {
-        const li = document.createElement('li');
-        li.style.marginBottom = '5px';
-        li.innerText = `${item.name} - NT$${item.price} `;
-
-        const delBtn = document.createElement('button');
-        delBtn.innerText = '❌';
-        delBtn.style.marginLeft = '10px';
-        delBtn.style.cursor = 'pointer';
-        delBtn.onclick = function() {
-            cart.splice(index, 1);
-            updateCartList();
-            document.querySelector('.badge').innerText = cart.length;
-        }
-
-        li.appendChild(delBtn);
-        cartItems.appendChild(li);
-
-        total += item.price;
-    });
-
-    cartTotal.innerText = total;
-}
-
-
-function checkout() {
-    if(cart.length === 0) {
-        alert('你的購物車是空的喔！');
-        return;
-    }
-
-    // 先整理資料
-    const order = {
-        items: cart.map(item => ({ name: item.name, price: item.price })),
-        total: cart.reduce((sum, item) => sum + item.price, 0)
-    };
-
-    fetch('https://gastrular-valorie-uncaptious.ngrok-free.dev/order', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(order)
-    })
-    .then(() => {
-        alert('訂單已送出到 LINE！😄');
-        cart = [];
-        document.querySelector('.badge').innerText = 0;
-        updateCartList();
-    })
-    .catch(err => {
-        console.error(err);
-        alert('送出失敗');
-    });
-}
-
-
-
-
-</script>
-</body>
-
 <footer>
-    <div class="footer-content">
-        <p>🍞 暖男麵包鋪</p>
-        <p>地址：247新北市蘆洲區信義路222巷35號</p>
-        <p>電話：02-8285-8625</p>
-        <p>&copy; 2026 暖男麵包鋪 All Rights Reserved.</p>
-        <a href="您的LINE連結" target="_blank">
-            <img src="line-icon.png" alt="LINE" style="width:24px;height:24px;">
-        </a>
-        <a href="您的Facebook連結" target="_blank">
-            <img src="facebook-icon.png" alt="Facebook" style="width:24px;height:24px;">
-        </a>
-        
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <div class="footer-logo">🍞 暖男麵包鋪</div>
+            <p>每日新鮮現烤，用最實在的食材，<br>做最溫暖的麵包。</p>
+        </div>
+        <div class="footer-col">
+            <h4>聯絡我們</h4>
+            <p>📍 新北市蘆洲區<br>信義路222巷35號</p>
+            <p>📞 02-8285-8625</p>
+        </div>
+        <div class="footer-col">
+            <h4>追蹤我們</h4>
+            <a href="#">LINE 官方帳號</a>
+            <a href="#">Facebook 粉絲頁</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        © 2026 暖男麵包鋪 · All Rights Reserved
     </div>
 </footer>
 
+<script>
+    // ── CART ──
+    // cart = { name: { price, qty } }
+    let cart = {};
+
+    function addToCart(name, price) {
+        if (cart[name]) {
+            cart[name].qty++;
+        } else {
+            cart[name] = { price, qty: 1 };
+        }
+        updateBadge();
+        updateCardStepper(name, price);
+        showToast(`${name} 已加入購物車 🛒`);
+    }
+
+    function changeQty(name, price, delta) {
+        if (!cart[name]) cart[name] = { price, qty: 0 };
+        cart[name].qty += delta;
+        if (cart[name].qty <= 0) delete cart[name];
+        updateBadge();
+        updateCardStepper(name, price);
+        if (document.getElementById('cart-panel').classList.contains('open')) renderCart();
+    }
+
+    function cartQty(name) {
+        return cart[name] ? cart[name].qty : 0;
+    }
+
+    function updateBadge() {
+        const total = Object.values(cart).reduce((s, i) => s + i.qty, 0);
+        document.getElementById('cart-badge').textContent = total;
+    }
+
+    // Update the +/stepper on the item card
+    function updateCardStepper(name, price) {
+        const key = name.replace(/[^a-zA-Z0-9\u4e00-\u9fff]/g, '_');
+        const wrap = document.getElementById('stepper-' + key);
+        if (!wrap) return;
+        const qty = cartQty(name);
+        if (qty === 0) {
+            wrap.innerHTML = `<button class="add-btn" onclick="addToCart('${name}', ${price})">+</button>`;
+        } else {
+            wrap.innerHTML = `
+                <div class="qty-stepper">
+                    <button class="qty-btn" onclick="changeQty('${name}', ${price}, -1)">−</button>
+                    <span class="qty-num">${qty}</span>
+                    <button class="qty-btn" onclick="changeQty('${name}', ${price}, 1)">+</button>
+                </div>`;
+        }
+    }
+
+    function openCart() {
+        document.getElementById('cart-panel').classList.add('open');
+        document.getElementById('cart-overlay').classList.add('open');
+        renderCart();
+    }
+
+    function closeCart() {
+        document.getElementById('cart-panel').classList.remove('open');
+        document.getElementById('cart-overlay').classList.remove('open');
+    }
+
+    function renderCart() {
+        const body = document.getElementById('cart-body');
+        const totalEl = document.getElementById('cart-total');
+        const items = Object.entries(cart);
+        if (items.length === 0) {
+            body.innerHTML = `<div class="cart-empty"><div class="empty-icon">🛒</div><p>購物車是空的<br>快去挑選美味麵包吧！</p></div>`;
+            totalEl.textContent = '0';
+            return;
+        }
+        const icons = ['🍞','🥐','🍩','🧀','🍫','🌿','🍯','🍓'];
+        let html = '';
+        let sum = 0;
+        items.forEach(([name, { price, qty }], i) => {
+            const icon = icons[i % icons.length];
+            const subtotal = price * qty;
+            sum += subtotal;
+            html += `
+                <div class="cart-item">
+                    <div class="cart-item-icon">${icon}</div>
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${name}</div>
+                        <div class="cart-item-price">NT$ ${price} × ${qty} = <strong>NT$ ${subtotal}</strong></div>
+                    </div>
+                    <div class="cart-qty-stepper">
+                        <button class="cart-qty-btn" onclick="cartChangeQty('${name}', -1)">−</button>
+                        <span class="cart-qty-num">${qty}</span>
+                        <button class="cart-qty-btn" onclick="cartChangeQty('${name}', 1)">+</button>
+                    </div>
+                </div>`;
+        });
+        body.innerHTML = html;
+        totalEl.textContent = sum;
+    }
+
+    function cartChangeQty(name, delta) {
+        if (!cart[name]) return;
+        cart[name].qty += delta;
+        if (cart[name].qty <= 0) delete cart[name];
+        updateBadge();
+        updateCardStepper(name, cart[name] ? cart[name].price : 0);
+        renderCart();
+    }
+
+    function removeItem(name) {
+        delete cart[name];
+        updateBadge();
+        renderCart();
+    }
+
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 2200);
+    }
+
+    function goToOrderForm() {
+        if (Object.keys(cart).length === 0) { showToast('購物車是空的喔！'); return; }
+        // render order summary
+        const items = Object.entries(cart);
+        let html = '';
+        items.forEach(([name, {price, qty}]) => {
+            html += `<div style="display:flex;justify-content:space-between;font-size:13px;color:var(--espresso);padding:3px 0;">
+                <span>${name} × ${qty}</span>
+                <span style="font-weight:600;">NT$ ${price * qty}</span>
+            </div>`;
+        });
+        const total = items.reduce((s,[,{price,qty}]) => s + price*qty, 0);
+        html += `<div style="border-top:1px solid rgba(200,133,58,0.25);margin-top:8px;padding-top:8px;display:flex;justify-content:space-between;font-size:14px;font-weight:700;color:var(--espresso);">
+            <span>合計</span><span>NT$ ${total}</span></div>`;
+        document.getElementById('order-summary').innerHTML = html;
+        document.getElementById('cart-total-2').textContent = total;
+        document.getElementById('step-cart').style.display = 'none';
+        document.getElementById('step-form').style.display = 'flex';
+
+        // pickup toggle
+        document.querySelectorAll('input[name="pickup"]').forEach(radio => {
+            radio.addEventListener('change', () => {
+                const isDelivery = radio.value === 'delivery';
+                document.getElementById('group-address').style.display = isDelivery ? 'flex' : 'none';
+                document.getElementById('opt-store').classList.toggle('selected', !isDelivery);
+                document.getElementById('opt-delivery').classList.toggle('selected', isDelivery);
+            });
+        });
+        document.querySelectorAll('.pickup-option').forEach(label => {
+            label.addEventListener('click', () => {
+                label.querySelector('input').checked = true;
+                label.querySelector('input').dispatchEvent(new Event('change'));
+            });
+        });
+        document.getElementById('opt-store').classList.add('selected');
+    }
+
+    function backToCart() {
+        document.getElementById('step-form').style.display = 'none';
+        document.getElementById('step-cart').style.display = 'flex';
+        document.getElementById('step-cart').style.flexDirection = 'column';
+        document.getElementById('step-cart').style.height = '100%';
+    }
+
+    function submitOrder() {
+        // validate
+        let valid = true;
+        const name = document.getElementById('field-name').value.trim();
+        const phone = document.getElementById('field-phone').value.trim();
+        const pickup = document.querySelector('input[name="pickup"]:checked').value;
+        const address = document.getElementById('field-address').value.trim();
+        const time = document.getElementById('field-time').value;
+        const note = document.getElementById('field-note').value.trim();
+
+        document.getElementById('err-name').textContent = '';
+        document.getElementById('err-phone').textContent = '';
+        document.getElementById('err-address').textContent = '';
+
+        if (!name) { document.getElementById('err-name').textContent = '請填寫姓名'; valid = false; }
+        if (!phone) { document.getElementById('err-phone').textContent = '請填寫電話'; valid = false; }
+        else if (!/^[\d\-\+\s]{7,15}$/.test(phone)) { document.getElementById('err-phone').textContent = '電話格式不正確'; valid = false; }
+        if (pickup === 'delivery' && !address) { document.getElementById('err-address').textContent = '請填寫外送地址'; valid = false; }
+        if (!valid) return;
+
+        const items = Object.entries(cart).map(([n,{price,qty}]) => ({ name: n, price, qty, subtotal: price*qty }));
+        const order = {
+            customer: { name, phone, pickup, address: address || null, time: time || null, note: note || null },
+            items,
+            total: items.reduce((s, i) => s + i.subtotal, 0)
+        };
+
+        fetch('https://gastrular-valorie-uncaptious.ngrok-free.dev/order', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(order)
+        }).then(() => {
+            showConfirmation(order);
+        }).catch(() => {
+            showToast('送出失敗，請稍後再試');
+        });
+    }
+
+    function showConfirmation(order) {
+        // build summary HTML
+        let html = '';
+        order.items.forEach(i => {
+            html += `<div class="confirm-row"><span>${i.name} × ${i.qty}</span><span>NT$ ${i.subtotal}</span></div>`;
+        });
+        html += `<div class="confirm-row total"><span>合計</span><span>NT$ ${order.total}</span></div>`;
+        html += `<div class="confirm-meta">`;
+        html += `👤 ${order.customer.name}　📞 ${order.customer.phone}<br>`;
+        html += order.customer.pickup === 'delivery'
+            ? `🛵 外送至：${order.customer.address}`
+            : `🏪 門市自取`;
+        if (order.customer.time) html += `<br>🕐 ${order.customer.time.replace('T',' ')}`;
+        if (order.customer.note) html += `<br>📝 ${order.customer.note}`;
+        html += `</div>`;
+
+        document.getElementById('confirm-summary').innerHTML = html;
+        document.getElementById('step-form').style.display = 'none';
+        const confirm = document.getElementById('step-confirm');
+        confirm.style.display = 'flex';
+
+        // clear cart
+        cart = {};
+        updateBadge();
+        document.querySelectorAll('[id^="stepper-"]').forEach(wrap => {
+            const n = wrap.dataset.name;
+            const p = parseInt(wrap.dataset.price);
+            if (n) wrap.innerHTML = `<button class="add-btn" onclick="addToCart('${n}', ${p})">+</button>`;
+        });
+    }
+
+    function finishOrder() {
+        closeCart();
+        // reset all steps
+        setTimeout(() => {
+            document.getElementById('step-confirm').style.display = 'none';
+            document.getElementById('step-cart').style.display = 'flex';
+            document.getElementById('field-name').value = '';
+            document.getElementById('field-phone').value = '';
+            document.getElementById('field-address').value = '';
+            document.getElementById('field-time').value = '';
+            document.getElementById('field-note').value = '';
+            renderCart();
+        }, 400);
+    }
+
+    // ── INIT: wrap all add-btn in a stepper container ──
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.add-btn').forEach(btn => {
+            const onclick = btn.getAttribute('onclick') || '';
+            const match = onclick.match(/addToCart\('(.+?)',\s*(\d+)\)/);
+            if (!match) return;
+            const name = match[1];
+            const price = parseInt(match[2]);
+            const key = name.replace(/[^a-zA-Z0-9\u4e00-\u9fff]/g, '_');
+            const wrap = document.createElement('div');
+            wrap.id = 'stepper-' + key;
+            wrap.dataset.name = name;
+            wrap.dataset.price = price;
+            btn.parentNode.insertBefore(wrap, btn);
+            wrap.appendChild(btn);
+        });
+    });
+
+    // ── BACK TO TOP ──
+    const topBtn = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+        topBtn.classList.toggle('visible', window.scrollY > 300);
+    });
+    topBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // ── SLIDESHOW ──
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.slide-dot');
+
+    function goSlide(n) {
+        slides[currentSlide].classList.remove('active');
+        dots[currentSlide].classList.remove('active');
+        currentSlide = n;
+        slides[currentSlide].classList.add('active');
+        dots[currentSlide].classList.add('active');
+    }
+
+    setInterval(() => goSlide((currentSlide + 1) % slides.length), 4000);
+
+    // ── SCROLL REVEAL ──
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => entry.target.classList.add('visible'), i * 60);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ── ACTIVE NAV TAB ──
+    const sections = document.querySelectorAll('.section[id]');
+    const tabs = document.querySelectorAll('.cat-tab');
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const id = entry.target.id;
+                tabs.forEach(t => {
+                    t.classList.toggle('active', t.getAttribute('href') === `#${id}`);
+                });
+            }
+        });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+
+    sections.forEach(s => sectionObserver.observe(s));
+</script>
+
+</body>
 </html>
